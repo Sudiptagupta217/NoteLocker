@@ -1,8 +1,10 @@
-package com.sudipta.mynote;
+package com.sudipta.mynote.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.sudipta.mynote.R;
 
 public class MainActivity extends AppCompatActivity {
 
