@@ -1,30 +1,31 @@
 package com.sudipta.mynote.ui;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sudipta.mynote.R;
 import com.sudipta.mynote.db.DatabaseClient;
 import com.sudipta.mynote.db.Note;
-import com.sudipta.mynote.db.NoteDatabase;
 
 public class AddNoteFragment extends Fragment {
 
     EditText titleEditText;
     EditText noteEditText;
     FloatingActionButton saveBtn;
-
-    NoteDatabase nodeDatabase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,14 +37,12 @@ public class AddNoteFragment extends Fragment {
         noteEditText = view.findViewById(R.id.note_editText);
         saveBtn = view.findViewById(R.id.save_button);
 
-
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setUpDb();
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,10 +52,11 @@ public class AddNoteFragment extends Fragment {
 
                 if (!noteTitle.isEmpty()) {
                     if (!noteBody.isEmpty()) {
-                        Note note = new Note(noteTitle, noteBody);
-                        nodeDatabase.getNoteDao().addNote(note);
-                        Toast.makeText(getContext(), "Note saved", Toast.LENGTH_LONG).show();
-                    }else {
+
+                        saveNote();
+
+
+                    } else {
                         noteEditText.setError("notes required");
                     }
                 } else {
@@ -66,7 +66,38 @@ public class AddNoteFragment extends Fragment {
         });
     }
 
-    private void setUpDb() {
-        nodeDatabase = DatabaseClient.databaseClient(getContext());
+    private void saveNote() {
+        class SaveNote extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                Note note = new Note(titleEditText.getText().toString(), noteEditText.getText().toString());
+
+                //adding to database
+                DatabaseClient.getInstance(getContext()).getAppDatabase().noteDao().addNote(note);
+
+                return null;
+            }
+
+
+            @Override
+            protected void onPostExecute(Void v) {
+                super.onPostExecute(v);
+                Intent mainIntent = new Intent(getActivity(), MainActivity.class);
+                startActivity(mainIntent);
+                Toast.makeText(getContext(), "Saved", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        SaveNote sn = new SaveNote();
+        sn.execute();
     }
+    private void setFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_from_righr,R.anim.slideout_from_left);
+        fragmentTransaction.replace(R.id.fragment,fragment);
+        fragmentTransaction.commit();
+    }
+
 }

@@ -7,8 +7,9 @@
     tools:context=".ui.HomeFragment">
 
 
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_note"
+        android:background="#D6D6D6"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

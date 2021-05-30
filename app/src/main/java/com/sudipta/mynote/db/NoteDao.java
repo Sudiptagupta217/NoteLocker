@@ -12,7 +12,7 @@ public interface NoteDao {
     @Insert
     public void addNote(Note note);
 
-    @Query("SELECT * FROM note ORDER BY id DESC")
+    @Query("Select * from note ORDER BY id DESC")
     List<Note> getAllNotes();
 
     @Insert
