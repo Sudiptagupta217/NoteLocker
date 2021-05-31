@@ -5,6 +5,7 @@ import java.util.List;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 @Dao
 public interface NoteDao {
@@ -15,7 +16,7 @@ public interface NoteDao {
     @Query("Select * from note ORDER BY id DESC")
     List<Note> getAllNotes();
 
-    @Insert
-    public void addultipleNotes(Note note);
+    @Update
+   public void updateNote(Note note);
 
 }

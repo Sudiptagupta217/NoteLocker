@@ -10,7 +10,7 @@ public class DatabaseClient {
     private static DatabaseClient databaseClient;
 
     //our app database object
-    private NoteDatabase noteDatabase;
+    private static NoteDatabase noteDatabase;
 
     private DatabaseClient(Context context) {
 
@@ -27,7 +27,7 @@ public class DatabaseClient {
         return databaseClient;
     }
 
-    public NoteDatabase getAppDatabase() {
+    public static NoteDatabase getAppDatabase() {
         return noteDatabase;
     }
 }

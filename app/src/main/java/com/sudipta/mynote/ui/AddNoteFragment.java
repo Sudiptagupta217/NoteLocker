@@ -47,6 +47,7 @@ public class AddNoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+
                 String noteTitle = titleEditText.getText().toString().trim();
                 String noteBody = noteEditText.getText().toString().trim();
 
@@ -58,9 +59,11 @@ public class AddNoteFragment extends Fragment {
 
                     } else {
                         noteEditText.setError("notes required");
+                        noteEditText.requestFocus();
                     }
                 } else {
                     titleEditText.setError("title required");
+                    titleEditText.requestFocus();
                 }
             }
         });
@@ -85,6 +88,7 @@ public class AddNoteFragment extends Fragment {
             protected void onPostExecute(Void v) {
                 super.onPostExecute(v);
                 Intent mainIntent = new Intent(getActivity(), MainActivity.class);
+//                getActivity().finish();
                 startActivity(mainIntent);
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_LONG).show();
             }
