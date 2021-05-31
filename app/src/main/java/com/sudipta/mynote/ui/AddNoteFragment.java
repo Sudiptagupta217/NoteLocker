@@ -56,11 +56,11 @@ public class AddNoteFragment extends Fragment {
 
 
                     } else {
-                        noteEditText.setError("notes required");
+                        noteEditText.setError("Notes required");
                         noteEditText.requestFocus();
                     }
                 } else {
-                    titleEditText.setError("title required");
+                    titleEditText.setError("Title required");
                     titleEditText.requestFocus();
                 }
             }

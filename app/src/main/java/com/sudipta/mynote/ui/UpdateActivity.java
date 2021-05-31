@@ -60,13 +60,13 @@ public class UpdateActivity extends AppCompatActivity {
         String nBody = noteEditText1.getText().toString();
 
         if (nTitle.isEmpty()) {
-            titleEditText1.setError("notes required");
+            titleEditText1.setError("Title required");
             titleEditText1.requestFocus();
             return;
         }
 
         if (nBody.isEmpty()) {
-            noteEditText1.setError("notes required");
+            noteEditText1.setError("Notes required");
             noteEditText1.requestFocus();
             return;
         }
