@@ -25,6 +25,7 @@
                 android:id="@+id/lineear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="10"
                 android:orientation="horizontal">
 
                 <TextView
@@ -34,14 +35,15 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:lines="1"
-                    android:layout_weight="1"
+                    android:layout_weight="9"
                     android:text="My First note"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <ImageView
                     android:id="@+id/edit_imageView"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
                     android:src="@drawable/pen" />
             </LinearLayout>
 

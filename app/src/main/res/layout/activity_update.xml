@@ -9,7 +9,7 @@
 
 
     <EditText
-        android:id="@+id/title_editText"
+        android:id="@+id/title_editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Title"
@@ -20,7 +20,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
     <EditText
-        android:id="@+id/note_editText"
+        android:id="@+id/note_editText1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
@@ -29,7 +29,7 @@
         android:foregroundGravity="top"
         android:background="@color/white"
         android:inputType="textMultiLine"
-        android:layout_below="@+id/title_editText"
+        android:layout_below="@+id/title_editText1"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

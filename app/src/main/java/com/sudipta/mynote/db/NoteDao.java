@@ -11,12 +11,12 @@ import androidx.room.Update;
 public interface NoteDao {
 
     @Insert
-    public void addNote(Note note);
+   void addNote(Note note);
 
     @Query("Select * from note ORDER BY id DESC")
     List<Note> getAllNotes();
 
     @Update
-   public void updateNote(Note note);
+    void updateNote(Note note);
 
 }

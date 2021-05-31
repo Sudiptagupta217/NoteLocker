@@ -1,4 +1,4 @@
-package com.sudipta.mynote;
+package com.sudipta.mynote.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,14 +10,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.sudipta.mynote.R;
 import com.sudipta.mynote.db.DatabaseClient;
 import com.sudipta.mynote.db.Note;
-import com.sudipta.mynote.ui.MainActivity;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText titleEditText;
-    EditText noteEditText;
+    EditText titleEditText1;
+    EditText noteEditText1;
     FloatingActionButton updateBtn;
 
     @Override
@@ -26,49 +26,48 @@ public class UpdateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update);
         getSupportActionBar().setTitle("Update");
 
-        titleEditText = findViewById(R.id.title_editText);
-        noteEditText = findViewById(R.id.note_editText);
+        titleEditText1 = findViewById(R.id.title_editText1);
+        noteEditText1 = findViewById(R.id.note_editText1);
         updateBtn = findViewById(R.id.update_button);
 
+//        Intent intent = getIntent();
+//        String title = intent.getStringExtra("nTitle");
+//        String body = intent.getStringExtra("nBody");
 
-        Intent intent = getIntent();
-        String title = intent.getStringExtra("nTitle");
-        String body = intent.getStringExtra("nBody");
+        final Note note = (Note) getIntent().getSerializableExtra("Rnote");
 
-        final Note task = (Note) getIntent().getSerializableExtra(title+body);
+        loaders(note);
 
-//        titleEditText.setText(title);
-//        noteEditText.setText(body);
-
-        loadtask(task);
+//        titleEditText1.setText(title);
+//        noteEditText1.setText(body);
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(UpdateActivity.this, "ok", Toast.LENGTH_SHORT).show();
-                updateTask(task);
+                updateTask(note);
+
             }
         });
     }
 
-    public void loadtask(Note task){
-        titleEditText.setText(task.getTitle());
-        noteEditText.setText(task.getNote());
+    public void loaders(Note note) {
+        titleEditText1.setText(note.getTitle());
+        noteEditText1.setText(note.getNote());
     }
 
-    private void updateTask(Note task) {
-        String nTitle = titleEditText.getText().toString().trim();
-        String nBody = noteEditText.getText().toString().trim();
+    private void updateTask(final Note note) {
+        String nTitle = titleEditText1.getText().toString();
+        String nBody = noteEditText1.getText().toString();
 
         if (nTitle.isEmpty()) {
-            titleEditText.setError("notes required");
-            titleEditText.requestFocus();
+            titleEditText1.setError("notes required");
+            titleEditText1.requestFocus();
             return;
         }
 
         if (nBody.isEmpty()) {
-            noteEditText.setError("notes required");
-            noteEditText.requestFocus();
+            noteEditText1.setError("notes required");
+            noteEditText1.requestFocus();
             return;
         }
 
@@ -76,11 +75,12 @@ public class UpdateActivity extends AppCompatActivity {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                task.setTitle(nTitle);
-                task.setNote(nBody);
+
+                note.setTitle(nTitle);
+                note.setNote(nBody);
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
                         .noteDao()
-                        .updateNote(task);
+                        .updateNote(note);
                 return null;
             }
 
@@ -96,6 +96,4 @@ public class UpdateActivity extends AppCompatActivity {
         UpdateTask ut = new UpdateTask();
         ut.execute();
     }
-
-
 }

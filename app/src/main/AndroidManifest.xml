@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyNote">
-        <activity android:name=".UpdateActivity"></activity>
+        <activity android:name=".ui.UpdateActivity"></activity>
         <activity android:name=".ui.ShowNote" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>

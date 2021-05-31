@@ -1,14 +1,17 @@
 package com.sudipta.mynote.db;
 
+import java.io.Serializable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Note {
+public class Note implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     int id;
+
     String title;
     @ColumnInfo(name = "body")
     String note;
