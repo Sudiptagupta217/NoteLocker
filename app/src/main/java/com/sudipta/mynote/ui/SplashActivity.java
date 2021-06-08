@@ -98,6 +98,7 @@ public class SplashActivity extends AppCompatActivity {
         if (textview.equals(mpassword)) {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         } else {
             mPassword.setError("Incorrect Password!");
             mPassword.requestFocus();

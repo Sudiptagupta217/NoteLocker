@@ -13,12 +13,21 @@ public class Note implements Serializable {
     int id;
 
     String title;
+
     @ColumnInfo(name = "body")
     String note;
 
-    public Note(String title, String note) {
+    String imagePath;
+
+    String color;
+
+    String dateTime;
+
+    public Note(String title, String note, String imagePath, String color) {
         this.title = title;
         this.note = note;
+        this.imagePath = imagePath;
+        this.color = color;
     }
 
     public int getId() {
@@ -43,5 +52,26 @@ public class Note implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return title + " : " + dateTime;
     }
 }

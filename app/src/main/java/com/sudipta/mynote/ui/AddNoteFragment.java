@@ -73,7 +73,7 @@ public class AddNoteFragment extends Fragment {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                Note note = new Note(titleEditText.getText().toString(), noteEditText.getText().toString());
+                Note note = new Note(titleEditText.getText().toString(), noteEditText.getText().toString(),null,null);
 
                 //adding to database
                 DatabaseClient.getInstance(getContext()).getAppDatabase().noteDao().addNote(note);
