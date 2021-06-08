@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_bg"
     android:orientation="vertical"
-    app:behavio_peekHeight="40dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <ImageView
