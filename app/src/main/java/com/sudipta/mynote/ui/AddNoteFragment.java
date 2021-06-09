@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sudipta.mynote.R;
 import com.sudipta.mynote.db.DatabaseClient;
@@ -24,13 +26,14 @@ public class AddNoteFragment extends Fragment {
     EditText titleEditText;
     EditText noteEditText;
     FloatingActionButton saveBtn;
+    LinearLayout layoutbotm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_note, container, false);
-
+        layoutbotm = view.findViewById(R.id.botmbarlayout);
         titleEditText = view.findViewById(R.id.title_editText);
         noteEditText = view.findViewById(R.id.note_editText);
         saveBtn = view.findViewById(R.id.save_button);
@@ -41,10 +44,11 @@ public class AddNoteFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        botmBtn();
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 String noteTitle = titleEditText.getText().toString().trim();
                 String noteBody = noteEditText.getText().toString().trim();
@@ -100,6 +104,22 @@ public class AddNoteFragment extends Fragment {
         fragmentTransaction.setCustomAnimations(R.anim.slide_from_righr,R.anim.slideout_from_left);
         fragmentTransaction.replace(R.id.fragment,fragment);
         fragmentTransaction.commit();
+    }
+
+    private void botmBtn(){
+       // final LinearLayout layoutbotm = view.findViewById(R.id.botmbarlayout);
+        final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutbotm);
+        layoutbotm.findViewById(R.id.textbt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomSheetBehavior.getState()!= BottomSheetBehavior.STATE_EXPANDED){
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+                else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
     }
 
 }

@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bottom_bg"
+    android:id="@+id/botmbarlayout"
     android:orientation="vertical"
+    app:behavior_peekHeight="40dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <ImageView
@@ -13,14 +14,28 @@
         android:layout_height="40dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
+        android:background="@android:color/transparent"
         android:src="@drawable/ic_baseline_horizontal_rule_24"
-        app:tint="@color/white" />
+        app:tint="@color/ColorDarkBlack" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="select color"
+        android:gravity="center"
+        android:background="@color/background"
+        android:textSize="14sp"
+        android:padding="5dp"
+        android:textColor="@color/white"
+        android:fontFamily="serif"/>
+
 
     <LinearLayout
         android:id="@+id/layoutNotesColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@color/background"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
