@@ -38,7 +38,6 @@ public class UpdateActivity extends AppCompatActivity {
 //        String body = intent.getStringExtra("nBody");
 
         final Note note = (Note) getIntent().getSerializableExtra("Rnote");
-
         loaders(note);
 
 //        titleEditText1.setText(title);

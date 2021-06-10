@@ -2,11 +2,14 @@ package com.sudipta.mynote.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sudipta.mynote.R;
@@ -16,6 +19,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
@@ -40,8 +44,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
         String title = notes.get(position).getTitle();
         String body =notes.get(position).getNote();
+        String color = notes.get(position).getColor();
 
-        viewHolder.setData(title,body);
+        viewHolder.setData(title,body,color);
 
     }
 
@@ -54,17 +59,23 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         private TextView titleTv;
         private TextView bodyTv;
         private ImageView editImageBtn;
+        ConstraintLayout notelayout;
+
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTv = itemView.findViewById(R.id.textView_title);
             bodyTv = itemView.findViewById(R.id.textView_note);
             editImageBtn= itemView.findViewById(R.id.edit_imageView);
+            notelayout=itemView.findViewById(R.id.notelayout);
 
         }
 
-        public void setData(String title, String body) {
+        public void setData(String title, String body , String color) {
             titleTv.setText(title);
             bodyTv.setText(body);
+            GradientDrawable gradientDrawable= (GradientDrawable) notelayout.getBackground();
+            gradientDrawable.setColor(Color.parseColor(color));
+            //notelayout.setBackground(color);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

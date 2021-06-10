@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/botmbarlayout"
@@ -21,7 +22,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="select color"
+        android:text="@string/select_color"
         android:gravity="center"
         android:background="@color/background"
         android:textSize="14sp"
@@ -37,7 +38,8 @@
         android:padding="10dp"
         android:background="@color/background"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="DisableBaselineAlignment">
 
         <FrameLayout
             android:layout_width="0dp"
@@ -80,7 +82,6 @@
                 android:layout_height="35dp"
                 android:contentDescription="@string/app_name"
                 android:padding="10dp"
-                android:src="@drawable/ic_baseline_done_24"
                 app:tint="@color/white" />
 
 
@@ -101,7 +102,6 @@
                 android:layout_height="35dp"
                 android:contentDescription="@string/app_name"
                 android:padding="10dp"
-                android:src="@drawable/ic_baseline_done_24"
                 app:tint="@color/white" />
 
 
@@ -123,7 +123,6 @@
                 android:layout_height="35dp"
                 android:contentDescription="@string/app_name"
                 android:padding="10dp"
-                android:src="@drawable/ic_baseline_done_24"
                 app:tint="@color/white" />
 
 
@@ -145,7 +144,6 @@
                 android:layout_height="35dp"
                 android:contentDescription="@string/app_name"
                 android:padding="10dp"
-                android:src="@drawable/ic_baseline_done_24"
                 app:tint="@color/white" />
 
 
@@ -169,7 +167,6 @@
                 android:layout_height="35dp"
                 android:contentDescription="@string/app_name"
                 android:padding="10dp"
-                android:src="@drawable/ic_baseline_done_24"
                 app:tint="@color/white"/>
 
         </FrameLayout>

@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="edittext_hint">Note</string>
+    <string name="select_color">select color</string>
 </resources>
