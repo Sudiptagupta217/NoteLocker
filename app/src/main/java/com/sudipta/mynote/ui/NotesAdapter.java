@@ -73,8 +73,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         public void setData(String title, String body , String color) {
             titleTv.setText(title);
             bodyTv.setText(body);
-            GradientDrawable gradientDrawable= (GradientDrawable) notelayout.getBackground();
-            gradientDrawable.setColor(Color.parseColor(color));
+           // GradientDrawable gradientDrawable= (GradientDrawable) notelayout.getBackground();
+            //gradientDrawable.setColor(Color.parseColor(color));
             //notelayout.setBackground(color);
 
             itemView.setOnClickListener(new View.OnClickListener() {

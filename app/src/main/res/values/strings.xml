@@ -5,4 +5,5 @@
 
     <string name="edittext_hint">Note</string>
     <string name="select_color">select color</string>
+    <string name="select_image">Select Image</string>
 </resources>
