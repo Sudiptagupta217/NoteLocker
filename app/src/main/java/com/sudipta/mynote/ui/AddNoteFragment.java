@@ -147,13 +147,6 @@ public class AddNoteFragment extends Fragment {
         sn.execute();
     }
 
-    private void setFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.slide_from_righr, R.anim.slideout_from_left);
-        fragmentTransaction.replace(R.id.fragment, fragment);
-        fragmentTransaction.commit();
-    }
-
     private void bottomsheetBtn() {
         final LinearLayout layoutbotm = getActivity().findViewById(R.id.botmbarlayout);
         final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutbotm);
@@ -259,6 +252,8 @@ public class AddNoteFragment extends Fragment {
                 // setTitleIndicatorColor();
             }
         });
+
+        //add image btn////
         layoutbotm.findViewById(R.id.layout_add_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -278,10 +273,10 @@ public class AddNoteFragment extends Fragment {
         });
     }
 
-//    private void setTitleIndicatorColor() {
-//        GradientDrawable gradientDrawable = (GradientDrawable) viewtitleIndicator.getBackground();
-//        gradientDrawable.setColor(Color.parseColor(selectedNoteColor));
-//    }
+        //private void setTitleIndicatorColor() {
+        //GradientDrawable gradientDrawable = (GradientDrawable) viewtitleIndicator.getBackground();
+        //gradientDrawable.setColor(Color.parseColor(selectedNoteColor));
+        //}
 
     ////set Imagenote
     private void selectImage() {
@@ -324,7 +319,6 @@ public class AddNoteFragment extends Fragment {
             }
         }
     }
-
     private String getPathFromUri(Uri contentUri) {
         String filePath;
         Cursor cursor = getActivity().getContentResolver()
@@ -338,5 +332,13 @@ public class AddNoteFragment extends Fragment {
             cursor.close();
         }
         return filePath;
+    }
+    /////set image end////
+
+    private void setFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_from_righr, R.anim.slideout_from_left);
+        fragmentTransaction.replace(R.id.fragment, fragment);
+        fragmentTransaction.commit();
     }
 }
