@@ -3,11 +3,13 @@ package com.sudipta.mynote.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,6 +21,7 @@ public class UpdateActivity extends AppCompatActivity {
 
     EditText titleEditText1;
     EditText noteEditText1;
+    ImageView noteImageView;
     FloatingActionButton updateBtn;
 
     @Override
@@ -32,12 +35,14 @@ public class UpdateActivity extends AppCompatActivity {
         titleEditText1 = findViewById(R.id.title_editText1);
         noteEditText1 = findViewById(R.id.note_editText1);
         updateBtn = findViewById(R.id.update_button);
+        noteImageView = findViewById(R.id.note_imageView);
 
 //        Intent intent = getIntent();
 //        String title = intent.getStringExtra("nTitle");
 //        String body = intent.getStringExtra("nBody");
 
         final Note note = (Note) getIntent().getSerializableExtra("Rnote");
+
         loaders(note);
 
 //        titleEditText1.setText(title);
@@ -55,6 +60,12 @@ public class UpdateActivity extends AppCompatActivity {
     public void loaders(Note note) {
         titleEditText1.setText(note.getTitle());
         noteEditText1.setText(note.getNote());
+        if (note.getImagePath() != null) {
+            noteImageView.setImageBitmap(BitmapFactory.decodeFile(note.getImagePath()));
+            noteImageView.setVisibility(View.VISIBLE);
+        } else {
+            noteImageView.setVisibility(View.GONE);
+        }
     }
 
     private void updateTask(final Note note) {

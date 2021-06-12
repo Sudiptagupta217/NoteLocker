@@ -23,11 +23,12 @@ public class Note implements Serializable {
 
     String dateTime;
 
-    public Note(String title, String note, String imagePath, String color) {
+    public Note(String title, String note, String imagePath, String color,String dateTime) {
         this.title = title;
         this.note = note;
         this.imagePath = imagePath;
         this.color = color;
+        this.dateTime = dateTime;
     }
 
 //    public Note(String title, String note) {
@@ -78,5 +79,13 @@ public class Note implements Serializable {
     @Override
     public String toString() {
         return title + " : " + dateTime;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 }

@@ -10,15 +10,19 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sudipta.mynote.R;
 import com.sudipta.mynote.db.DatabaseClient;
 import com.sudipta.mynote.db.Note;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,6 +31,9 @@ public class HomeFragment extends Fragment {
 
     // ListView listView;
     private RecyclerView recyclerView;
+    private EditText inputSearch;
+
+    List<Note> noteList= new ArrayList<>();
     NotesAdapter adapter;
 
     @Override
@@ -38,6 +45,8 @@ public class HomeFragment extends Fragment {
         addButton = view.findViewById(R.id.add_button);
 
         recyclerView = view.findViewById(R.id.recycler_view_note);
+
+        inputSearch = view.findViewById(R.id.searchEditText);
 
         return view;
     }
@@ -59,8 +68,29 @@ public class HomeFragment extends Fragment {
             }
 
         });
-    }
 
+
+        //search note code
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+//                if (noteList.size() != 0) {
+                    adapter.searchNotes(s.toString());
+//                }
+            }
+        });
+
+    }
 
     private void getNotes() {
         class Getnotes extends AsyncTask<Void, Void, List<Note>> {

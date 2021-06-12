@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ public class ShowNote extends AppCompatActivity {
     private TextView noteBody;
     private TextView noteTime;
     private ImageView deleteIVB;
+    private ImageView noteImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class ShowNote extends AppCompatActivity {
         noteBody = findViewById(R.id.noteBody_TV);
         noteTime = findViewById(R.id.time_TV);
         deleteIVB=findViewById(R.id.delete_IVB);
+        noteImageView = findViewById(R.id.note_imageView);
 
 //        Intent intent = getIntent();
 //        String title = intent.getStringExtra("nTitle");
@@ -75,6 +78,15 @@ public class ShowNote extends AppCompatActivity {
     public void loaders(Note note) {
         noteTitle.setText(note.getTitle());
         noteBody.setText(note.getNote());
+        noteTime.setText(note.getDateTime());
+
+        if (note.getImagePath() != null) {
+            noteImageView.setImageBitmap(BitmapFactory.decodeFile(note.getImagePath()));
+            noteImageView.setVisibility(View.VISIBLE);
+        } else {
+            noteImageView.setVisibility(View.GONE);
+        }
+
     }
 
     private void deleteNote(Note note) {

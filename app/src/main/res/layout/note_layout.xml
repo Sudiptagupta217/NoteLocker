@@ -11,7 +11,7 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:elevation="2dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,10 +22,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            >
+
+            <ImageView
+                android:id="@+id/imagenote"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
+                android:visibility="gone"
+                android:src="@drawable/pic5" />
 
             <LinearLayout
                 android:id="@+id/lineear"
+                android:layout_below="@+id/imagenote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="10"
@@ -35,20 +44,20 @@
                     android:id="@+id/textView_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp"
                     android:gravity="center"
                     android:lines="1"
-                    android:layout_weight="9"
+                    android:layout_weight="10"
                     android:text="My First note"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <ImageView
                     android:id="@+id/edit_imageView"
-                    android:layout_width="20dp"
-                    android:layout_height="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
-                    android:src="@drawable/pen" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_more_vert_24" />
             </LinearLayout>
 
             <TextView
@@ -56,10 +65,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lineear"
-                android:lines="3"
+                android:lines="2"
+               android:layout_marginRight="8dp"
+               android:layout_marginLeft="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
                 android:textSize="20sp"
                 android:text="Note description"/>
+
+            <TextView
+                android:id="@+id/textDateTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="3dp"
+                android:textColor="@color/white"
+                android:background="@color/ColorLightBlack"
+                android:layout_below="@id/textView_note"
+                android:fontFamily="serif"
+                android:text="12 june 2021"
+                android:textSize="10sp" />
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

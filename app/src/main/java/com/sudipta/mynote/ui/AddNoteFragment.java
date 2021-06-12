@@ -1,11 +1,20 @@
 package com.sudipta.mynote.ui;
 
+import android.Manifest;
 import android.content.Intent;
 
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 
 import android.view.View;
@@ -13,9 +22,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -26,24 +39,26 @@ import com.sudipta.mynote.R;
 import com.sudipta.mynote.db.DatabaseClient;
 import com.sudipta.mynote.db.Note;
 
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 public class AddNoteFragment extends Fragment {
 
     private EditText titleEditText;
     private EditText noteEditText;
     private FloatingActionButton saveBtn;
-   // private LinearLayout layoutbotm;
     private View viewtitleIndicator;
-
-//    ImageView imageColor1;
-//    ImageView imageColor2;
-//    ImageView imageColor3;
-//    ImageView imageColor4;
-//    ImageView imageColor5;
-//    ImageView imageColor6;
-//
-//    View viewColor1, viewColor2, viewColor3, viewColor4, viewColor5, viewColor6;
+    private ImageView imageNote;
+    private TextView textDateTime;
 
     private String selectedNoteColor;
+    private String selectedImagePath;
+
+    private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
+    private static final int REQUEST_CODE_SELECT_IMAGE = 2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,21 +69,9 @@ public class AddNoteFragment extends Fragment {
         noteEditText = view.findViewById(R.id.note_editText);
         saveBtn = view.findViewById(R.id.save_button);
         viewtitleIndicator = view.findViewById(R.id.viewtitleIndicator);
-       // layoutbotm = view.findViewById(R.id.botmbarlayout);
+        imageNote = view.findViewById(R.id.note_imageView);
+        textDateTime = view.findViewById(R.id.textDateTime);
 
-//        imageColor1 = view.findViewById(R.id.imageColor1);
-//        imageColor2 = view.findViewById(R.id.imageColor2);
-//        imageColor3 = view.findViewById(R.id.imageColor3);
-//        imageColor4 = view.findViewById(R.id.imageColor4);
-//        imageColor5 = view.findViewById(R.id.imageColor5);
-//        imageColor6 = view.findViewById(R.id.imageColor6);
-//
-//        viewColor1 = view.findViewById(R.id.viewColor1);
-//        viewColor2 = view.findViewById(R.id.viewColor2);
-//        viewColor3 = view.findViewById(R.id.viewColor3);
-//        viewColor4 = view.findViewById(R.id.viewColor4);
-//        viewColor5 = view.findViewById(R.id.viewColor5);
-//        viewColor6 = view.findViewById(R.id.viewColor6);
 
         return view;
     }
@@ -78,9 +81,15 @@ public class AddNoteFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         selectedNoteColor = "#333333";
+        selectedImagePath = null;
 
         bottomsheetBtn();
-       // setTitleIndicatorColor();
+        // setTitleIndicatorColor();
+
+        textDateTime.setText(
+                new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm a", Locale.getDefault())
+                        .format(new Date())
+        );
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +114,8 @@ public class AddNoteFragment extends Fragment {
                 }
             }
         });
+
+
     }
 
     private void saveNote() {
@@ -113,7 +124,7 @@ public class AddNoteFragment extends Fragment {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                Note note = new Note(titleEditText.getText().toString(), noteEditText.getText().toString(),null,selectedNoteColor);
+                Note note = new Note(titleEditText.getText().toString(), noteEditText.getText().toString(), selectedImagePath, selectedNoteColor, textDateTime.getText().toString());
 
                 //adding to database
                 DatabaseClient.getInstance(getContext()).getAppDatabase().noteDao().addNote(note);
@@ -144,7 +155,7 @@ public class AddNoteFragment extends Fragment {
     }
 
     private void bottomsheetBtn() {
-         final LinearLayout layoutbotm = getActivity().findViewById(R.id.botmbarlayout);
+        final LinearLayout layoutbotm = getActivity().findViewById(R.id.botmbarlayout);
         final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutbotm);
         layoutbotm.findViewById(R.id.textbt).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +176,7 @@ public class AddNoteFragment extends Fragment {
         final ImageView imageColor5 = layoutbotm.findViewById(R.id.imageColor5);
         final ImageView imageColor6 = layoutbotm.findViewById(R.id.imageColor6);
 
-       layoutbotm.findViewById(R.id.viewColor1).setOnClickListener(new View.OnClickListener() {
+        layoutbotm.findViewById(R.id.viewColor1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedNoteColor = "#FFBB86FC";
@@ -175,7 +186,7 @@ public class AddNoteFragment extends Fragment {
                 imageColor4.setImageResource(0);
                 imageColor5.setImageResource(0);
                 imageColor6.setImageResource(0);
-             //   setTitleIndicatorColor();
+                //   setTitleIndicatorColor();
             }
         });
 
@@ -189,7 +200,7 @@ public class AddNoteFragment extends Fragment {
                 imageColor4.setImageResource(0);
                 imageColor5.setImageResource(0);
                 imageColor6.setImageResource(0);
-               // setTitleIndicatorColor();
+                // setTitleIndicatorColor();
             }
         });
 
@@ -203,7 +214,7 @@ public class AddNoteFragment extends Fragment {
                 imageColor4.setImageResource(0);
                 imageColor5.setImageResource(0);
                 imageColor6.setImageResource(0);
-              //  setTitleIndicatorColor();
+                //  setTitleIndicatorColor();
             }
         });
 
@@ -217,7 +228,7 @@ public class AddNoteFragment extends Fragment {
                 imageColor4.setImageResource(R.drawable.ic_baseline_done_24);
                 imageColor5.setImageResource(0);
                 imageColor6.setImageResource(0);
-               // setTitleIndicatorColor();
+                // setTitleIndicatorColor();
             }
         });
 
@@ -245,7 +256,24 @@ public class AddNoteFragment extends Fragment {
                 imageColor4.setImageResource(0);
                 imageColor5.setImageResource(0);
                 imageColor6.setImageResource(R.drawable.ic_baseline_done_24);
-               // setTitleIndicatorColor();
+                // setTitleIndicatorColor();
+            }
+        });
+        layoutbotm.findViewById(R.id.layout_add_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                if (ContextCompat.checkSelfPermission(
+                        getActivity().getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                            getActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            REQUEST_CODE_STORAGE_PERMISSION
+                    );
+                } else {
+                    selectImage();
+                }
             }
         });
     }
@@ -254,4 +282,61 @@ public class AddNoteFragment extends Fragment {
 //        GradientDrawable gradientDrawable = (GradientDrawable) viewtitleIndicator.getBackground();
 //        gradientDrawable.setColor(Color.parseColor(selectedNoteColor));
 //    }
+
+    ////set Imagenote
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                selectImage();
+            } else {
+                Toast.makeText(getContext(), "Permission Denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SELECT_IMAGE) {
+            if (data != null) {
+                Uri selectedImageUri = data.getData();
+                if (selectedImageUri != null) {
+                    try {
+                        InputStream inputStream = getContext().getContentResolver().openInputStream(selectedImageUri);
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        imageNote.setImageBitmap(bitmap);
+                        imageNote.setVisibility(View.VISIBLE);
+
+                        selectedImagePath = getPathFromUri(selectedImageUri);
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    }
+
+    private String getPathFromUri(Uri contentUri) {
+        String filePath;
+        Cursor cursor = getActivity().getContentResolver()
+                .query(contentUri, null, null, null, null);
+        if (cursor == null) {
+            filePath = contentUri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndex("_data");
+            filePath = cursor.getString(index);
+            cursor.close();
+        }
+        return filePath;
+    }
 }

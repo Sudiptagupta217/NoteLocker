@@ -10,11 +10,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#B00020</color>
     <color name="lightred">#CA7474</color>
+    <color name="gray">#DDDDDD</color>
 
     <color name="background">#10141C</color>
     <color name="ColorLightBlack">#171C26</color>
     <color name="ColorDarkBlack">#10141C</color>
-
 
     <color name="colorpurple">#FFBB86FC</color>
     <color name="ColorYellow">#FFEB3B</color>
@@ -22,8 +22,5 @@
     <color name="ColorLightGreen">#8BC34A</color>
     <color name="ColorOrangeNote">#ff7746</color>
     <color name="ColorGreenNote">#0aebaf</color>
-
-
-
 
 </resources>
