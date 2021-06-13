@@ -13,6 +13,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -20,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,6 +45,7 @@ import com.sudipta.mynote.db.Note;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -57,6 +62,10 @@ public class AddNoteFragment extends Fragment {
     private String selectedNoteColor;
     private String selectedImagePath;
 
+    ImageButton audioImageButton;
+    SpeechRecognizer speechRecognizer;
+    int count = 0;
+
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
 
@@ -71,7 +80,7 @@ public class AddNoteFragment extends Fragment {
         viewtitleIndicator = view.findViewById(R.id.viewtitleIndicator);
         imageNote = view.findViewById(R.id.note_imageView);
         textDateTime = view.findViewById(R.id.textDateTime);
-
+        audioImageButton = view.findViewById(R.id.audioimageBtn);
 
         return view;
     }
@@ -85,6 +94,7 @@ public class AddNoteFragment extends Fragment {
 
         bottomsheetBtn();
         // setTitleIndicatorColor();
+        setvoice();
 
         textDateTime.setText(
                 new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm a", Locale.getDefault())
@@ -273,28 +283,16 @@ public class AddNoteFragment extends Fragment {
         });
     }
 
-        //private void setTitleIndicatorColor() {
-        //GradientDrawable gradientDrawable = (GradientDrawable) viewtitleIndicator.getBackground();
-        //gradientDrawable.setColor(Color.parseColor(selectedNoteColor));
-        //}
+    //private void setTitleIndicatorColor() {
+    //GradientDrawable gradientDrawable = (GradientDrawable) viewtitleIndicator.getBackground();
+    //gradientDrawable.setColor(Color.parseColor(selectedNoteColor));
+    //}
 
     ////set Imagenote
     private void selectImage() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                selectImage();
-            } else {
-                Toast.makeText(getContext(), "Permission Denied!", Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
@@ -319,6 +317,7 @@ public class AddNoteFragment extends Fragment {
             }
         }
     }
+
     private String getPathFromUri(Uri contentUri) {
         String filePath;
         Cursor cursor = getActivity().getContentResolver()
@@ -335,10 +334,109 @@ public class AddNoteFragment extends Fragment {
     }
     /////set image end////
 
+    //set voice to text
+    private void setvoice() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, 1);
+        }
+
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getActivity());
+        final Intent speechrecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        audioImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (count == 0) {
+                    audioImageButton.setImageDrawable(getActivity().getDrawable(R.drawable.ic_baseline_mic_24));
+
+                    speechRecognizer.startListening(speechrecognizerIntent);
+                    count = 1;
+                } else {
+                    audioImageButton.setImageDrawable(getActivity().getDrawable(R.drawable.ic_baseline_mic_off_24));
+
+                    speechRecognizer.stopListening();
+                    count = 0;
+                }
+            }
+        });
+
+        speechRecognizer.setRecognitionListener(new RecognitionListener() {
+            @Override
+            public void onReadyForSpeech(Bundle params) {
+
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {
+
+            }
+
+            @Override
+            public void onRmsChanged(float rmsdB) {
+
+            }
+
+            @Override
+            public void onBufferReceived(byte[] buffer) {
+
+            }
+
+            @Override
+            public void onEndOfSpeech() {
+
+            }
+
+            @Override
+            public void onError(int error) {
+
+            }
+
+            @Override
+            public void onResults(Bundle results) {
+                ArrayList<String> data = results.getStringArrayList(speechRecognizer.RESULTS_RECOGNITION);
+                titleEditText.setText(data.get(0));
+            }
+
+            @Override
+            public void onPartialResults(Bundle partialResults) {
+
+            }
+
+            @Override
+            public void onEvent(int eventType, Bundle params) {
+
+            }
+        });
+    }
+    //set voice to text close//
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        //this is for image upload
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                selectImage();
+            } else {
+                Toast.makeText(getContext(), "Permission Denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        //this is for audio record
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(), "Permission Granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Permission Denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_from_righr, R.anim.slideout_from_left);
         fragmentTransaction.replace(R.id.fragment, fragment);
         fragmentTransaction.commit();
     }
+
 }

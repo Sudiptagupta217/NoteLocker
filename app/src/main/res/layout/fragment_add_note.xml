@@ -19,6 +19,8 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:padding="5dp"
+            android:background="@color/blackBar"
+            android:textColor="@color/white"
             android:fontFamily="serif"
             android:text="12 june 2021"
             android:textSize="10sp" />
@@ -32,6 +34,7 @@
                 android:id="@+id/title_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginBottom="2dp"
                 android:background="@color/white"
                 android:hint="Title"
@@ -41,6 +44,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/audioimageBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/ic_baseline_mic_off_24"/>
+
         </LinearLayout>
 
 
