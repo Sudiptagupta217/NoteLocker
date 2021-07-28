@@ -15,10 +15,10 @@
 
 # Output :-
 
-|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img1.jpeg" width="200">
-|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img2.jpeg" width="200">
-|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img3.jpeg" width="200">
-|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img4.jpeg" width="200">
-|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img5.jpeg" width="200">
-|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img6.jpeg" width="200">
+|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img1.jpeg" width="150">
+|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img2.jpeg" width="150">
+|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img3.jpeg" width="150">
+|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img4.jpeg" width="150">
+|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img5.jpeg" width="150">
+|<img src="https://raw.githubusercontent.com/Sudiptagupta217/NoteLocker/master/app/src/main/res/drawable/img6.jpeg" width="150">
 
