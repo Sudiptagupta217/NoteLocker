@@ -6,4 +6,11 @@
     <string name="edittext_hint">Note</string>
     <string name="select_color">select color</string>
     <string name="select_image">Select Image</string>
+
+    <string-array name="theme">
+        <item>System Default</item>
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
+
 </resources>

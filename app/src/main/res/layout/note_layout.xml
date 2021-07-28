@@ -26,11 +26,11 @@
 
             <ImageView
                 android:id="@+id/imagenote"
+
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:scaleType="fitXY"
-                android:visibility="gone"
-                android:src="@drawable/pic5" />
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/lineear"
@@ -42,6 +42,7 @@
 
                 <TextView
                     android:id="@+id/textView_title"
+                    android:transitionName="Title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -62,12 +63,15 @@
 
             <TextView
                 android:id="@+id/textView_note"
+                android:transitionName="Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/lineear"
                 android:lines="2"
-               android:layout_marginRight="8dp"
-               android:layout_marginLeft="8dp"
+                android:maxLines="2"
+                android:fontFamily="@font/bodyfont"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
                 android:textSize="20sp"
                 android:text="Note description"/>
@@ -78,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="3dp"
-                android:textColor="@color/white"
+                android:textColor="#90ffffff"
                 android:background="@color/ColorLightBlack"
                 android:layout_below="@id/textView_note"
                 android:fontFamily="serif"

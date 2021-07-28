@@ -15,7 +15,7 @@
         android:layout_marginTop="100dp"
         android:gravity="center"
         android:text="Write Note"
-        android:textColor="@color/white"
+        android:textColor="#ffffff"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,8 +113,9 @@
             android:layout_marginTop="10dp"
             android:backgroundTint="@android:color/transparent"
             android:padding="10dp"
+            android:elevation="0dp"
             android:text="Done"
-            android:textColor="@color/white"
+            android:textColor="#ffffff"
             android:textSize="18sp" />
 
 

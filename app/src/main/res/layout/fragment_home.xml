@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D6D6D6"
+    android:background="@color/gray"
     tools:context=".ui.HomeFragment">
 
     <LinearLayout
         android:id="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/border_background"
+        android:background="@drawable/bgsearch"
         android:orientation="horizontal"
         android:padding="8dp">
 
@@ -43,7 +42,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_note"
-        android:background="#D6D6D6"
+        android:background="@color/gray"
         android:layout_below="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

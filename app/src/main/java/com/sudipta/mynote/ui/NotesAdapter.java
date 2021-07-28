@@ -1,5 +1,7 @@
 package com.sudipta.mynote.ui;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -8,6 +10,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,8 +117,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
                     Intent intent = new Intent(context, ShowNote.class);
                     intent.putExtra("Rnote", note);
+                    Pair[] pairs = new Pair[2];
+                    pairs[0] = new Pair<View, String>(titleTv, "Title");
+                    pairs[1] = new Pair<View, String>(bodyTv, "Body");
 
-                    context.startActivity(intent);
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, pairs);
+
+                    //startActivity(intent,options.toBundle());
+                    context.startActivity(intent,options.toBundle());
                 }
             });
             editImageBtn.setOnClickListener(new View.OnClickListener() {

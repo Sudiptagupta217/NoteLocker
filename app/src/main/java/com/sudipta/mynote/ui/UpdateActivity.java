@@ -28,9 +28,10 @@ public class UpdateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);  //set full screen;
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);  //set full screen;
 
         getSupportActionBar().setTitle("Update");
+        getSupportActionBar().setElevation(0);
 
         titleEditText1 = findViewById(R.id.title_editText1);
         noteEditText1 = findViewById(R.id.note_editText1);

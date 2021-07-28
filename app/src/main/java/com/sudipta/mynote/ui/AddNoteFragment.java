@@ -77,7 +77,6 @@ public class AddNoteFragment extends Fragment {
         titleEditText = view.findViewById(R.id.title_editText);
         noteEditText = view.findViewById(R.id.note_editText);
         saveBtn = view.findViewById(R.id.save_button);
-        viewtitleIndicator = view.findViewById(R.id.viewtitleIndicator);
         imageNote = view.findViewById(R.id.note_imageView);
         textDateTime = view.findViewById(R.id.textDateTime);
         audioImageButton = view.findViewById(R.id.audioimageBtn);
